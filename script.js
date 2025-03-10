@@ -17,7 +17,7 @@ function getNumber() {
 
         document.getElementById("output").innerText = message;
     } else {
-        document.getElementById("output").innerText = "Bitte eine gültige Zahl eingeben.";
+        document.getElementById("output").innerText = "Please enter a valid number.";
     }
 }
 function getColor() {
