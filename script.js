@@ -36,3 +36,15 @@ function getColor() {
         document.getElementById("output2").innerText = "This is not a real color!";
     }
 }
+function getAnimal(){
+    let inputElement = document.getElementById("animalInput");
+    let animal = inputElement.value.trim().toLowerCase();
+    if (animal === ""){
+        document.getElementById("output3").innerText = "Please enter an animal.";
+        return;
+    }
+}
+if (animal === "dog || cat || fish || bird || rabbit || horse || butterfly || shark || giraffe || elephant || bee || lion || tiger || bear || monkey || panda || penguin || kangaroo || koala || crocodile || snake || turtle || owl || fox || wolf || deer || zebra || rhinoceros || hippopotamus || camel || flamingo || parrot || dolphin || octopus || jellyfish || starfish || seahorse || crab || lobster || snail || ant || spider || scorpion || mosquito || fly || ladybug || beetle || dragonfly"){
+    document.getElementById("output3").innerText = animal + "is a beautiful animal!";
+    return;
+}
