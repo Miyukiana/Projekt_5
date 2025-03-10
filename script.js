@@ -48,8 +48,7 @@ function getAnimal(){
 "turtle"|| "owl"|| "fox"|| "wolf"|| "deer"|| "zebra"|| "rhinoceros"|| "hippopotamus"|| "camel"|| "flamingo"||
 "parrot"|| "dolphin"|| "octopus"|| "jellyfish"|| "starfish"|| "seahorse"|| "crab"|| "lobster"|| "snail"||
 "ant"|| "spider"|| "scorpion"|| "mosquito"|| "fly"|| "ladybug"|| "beetle"|| "dragonfly" ) 
-{ document.getElementById("output3").innerText = animal + "is a beautiful animal!";
+{ document.getElementById("output3").innerText = animal + " is a beautiful animal!";
         else {
 document.getElementById("output3").innerText = "This animal doesn't exist.";
-}        
-}
+}}
