@@ -1,54 +1,138 @@
+const translations = {
+    "de": {
+        "title": "KeineAhnung",
+        "questions": "Fragen:",
+        "age_question": "Wie alt bist du?",
+        "age_placeholder": "Dein Alter",
+        "color_question": "Was ist deine Lieblingsfarbe?",
+        "color_placeholder": "Deine Lieblingsfarbe",
+        "animal_question": "Was ist dein Lieblingstier?",
+        "animal_placeholder": "Dein Lieblingstier",
+        "submit": "Absenden",
+        "age_older": "Du bist {0} Jahre älter als ich.",
+        "age_younger": "Ich bin {0} Jahre älter als du.",
+        "age_same": "Wir sind gleich alt!",
+        "age_invalid": "Bitte gib eine gültige Zahl ein.",
+        "color_prompt": "Bitte gib eine Farbe ein.",
+        "color_valid": "{0} ist eine schöne Farbe!",
+        "color_invalid": "Das ist keine echte Farbe!",
+        "animal_prompt": "Bitte gib ein Tier ein.",
+        "animal_valid": "{0}s sind großartige Tiere!",
+        "animal_invalid": "Dieses Tier existiert nicht in unserer Liste.",
+
+        // Tiernamen auf Deutsch
+        "dog": "Hund", "cat": "Katze", "fish": "Fisch", "bird": "Vogel", "rabbit": "Kaninchen",
+        "horse": "Pferd", "butterfly": "Schmetterling", "shark": "Hai", "giraffe": "Giraffe",
+        "elephant": "Elefant", "bee": "Biene", "lion": "Löwe", "tiger": "Tiger", "bear": "Bär",
+        "monkey": "Affe", "panda": "Panda", "penguin": "Pinguin", "kangaroo": "Känguru",
+        "koala": "Koala", "crocodile": "Krokodil", "snake": "Schlange", "turtle": "Schildkröte",
+        "owl": "Eule", "fox": "Fuchs", "wolf": "Wolf", "deer": "Hirsch", "zebra": "Zebra"
+    },
+    "en": {
+        "title": "NoIdea",
+        "questions": "Questions:",
+        "age_question": "How old are you?",
+        "age_placeholder": "Your Age",
+        "color_question": "What's your favorite color?",
+        "color_placeholder": "Your favorite color",
+        "animal_question": "What's your favorite animal?",
+        "animal_placeholder": "Your favorite animal",
+        "submit": "Submit",
+        "age_older": "You are {0} years older than me.",
+        "age_younger": "I am {0} years older than you.",
+        "age_same": "We are the same age!",
+        "age_invalid": "Please enter a valid number.",
+        "color_prompt": "Please enter a color.",
+        "color_valid": "{0} is a beautiful color!",
+        "color_invalid": "This is not a real color!",
+        "animal_prompt": "Please enter an animal.",
+        "animal_valid": "{0}s are great animals!",
+        "animal_invalid": "This animal doesn't exist in our list."
+    }
+};
+
+// Sprache setzen und Texte aktualisieren
+function setLanguage(lang) {
+    localStorage.setItem("language", lang);
+
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.getAttribute("data-i18n");
+        if (translations[lang][key]) {
+            element.innerText = translations[lang][key];
+        }
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+        const key = element.getAttribute("data-i18n-placeholder");
+        if (translations[lang][key]) {
+            element.placeholder = translations[lang][key];
+        }
+    });
+}
+
+// Seite mit gespeicherter Sprache laden
+document.addEventListener("DOMContentLoaded", () => {
+    const userLang = localStorage.getItem("language") || "de";
+    setLanguage(userLang);
+});
+
+// Funktion zur Altersprüfung
 function getNumber() {
-    let inputElement = document.getElementById("numberInput");
-    let number = parseInt(inputElement.value); // Wert als Integer holen
+    const inputElement = document.getElementById("numberInput");
+    const number = parseInt(inputElement.value);
+    const lang = localStorage.getItem("language") || "de";
 
     if (!isNaN(number)) {
         const myAge = 14;
-        let difference = number - myAge;
+        const difference = number - myAge;
         let message = "";
 
         if (difference > 0) {
-            message = "You are " + difference + " years older than me.";
+            message = translations[lang]["age_older"].replace("{0}", difference);
         } else if (difference < 0) {
-            message = "I am " + Math.abs(difference) + " years older than you.";
+            message = translations[lang]["age_younger"].replace("{0}", Math.abs(difference));
         } else {
-            message = "We are the same age!";
+            message = translations[lang]["age_same"];
         }
 
         document.getElementById("output").innerText = message;
     } else {
-        document.getElementById("output").innerText = "Please enter a valid number.";
+        document.getElementById("output").innerText = translations[lang]["age_invalid"];
     }
 }
+
+// Funktion zur Farbprüfung
 function getColor() {
-    let inputElement = document.getElementById("colorInput");
-    let color = inputElement.value.trim().toLowerCase(); // Remove spaces & convert to lowercase
+    const inputElement = document.getElementById("colorInput");
+    const color = inputElement.value.trim().toLowerCase();
+    const lang = localStorage.getItem("language") || "de";
 
     if (color === "") {
-        document.getElementById("output2").innerText = "Please enter a color.";
+        document.getElementById("output2").innerText = translations[lang]["color_prompt"];
         return;
     }
 
-    // Check if the entered color is a valid CSS color
     if (CSS.supports("color", color)) {
-        document.getElementById("output2").innerText = color +" is a beautiful color!";
+        document.getElementById("output2").innerText = translations[lang]["color_valid"].replace("{0}", color);
     } else {
-        document.getElementById("output2").innerText = "This is not a real color!";
+        document.getElementById("output2").innerText = translations[lang]["color_invalid"];
     }
 }
-function getAnimal(){
-    let inputElement = document.getElementById("animalInput");
+
+// Funktion zur Tierprüfung
+function getAnimal() {
+    const inputElement = document.getElementById("animalInput");
     let animal = inputElement.value.trim().toLowerCase();
-    if (animal === ""){
-        document.getElementById("output3").innerText = "Please enter an animal.";
+    const lang = localStorage.getItem("language") || "de";
+
+    if (animal === "") {
+        document.getElementById("output3").innerText = translations[lang]["animal_prompt"];
         return;
     }
-    if (animal === "dog"|| "cat"|| "fish"|| "bird"|| "rabbit"|| "horse"|| "butterfly"|| "shark"|| "giraffe"|| "elephant"|| "bee"||
-"lion"|| "tiger"|| "bear"|| "monkey"|| "panda"|| "penguin"|| "kangaroo"|| "koala"|| "crocodile"|| "snake"||
-"turtle"|| "owl"|| "fox"|| "wolf"|| "deer"|| "zebra"|| "rhinoceros"|| "hippopotamus"|| "camel"|| "flamingo"||
-"parrot"|| "dolphin"|| "octopus"|| "jellyfish"|| "starfish"|| "seahorse"|| "crab"|| "lobster"|| "snail"||
-"ant"|| "spider"|| "scorpion"|| "mosquito"|| "fly"|| "ladybug"|| "beetle"|| "dragonfly" ) 
-{ document.getElementById("output3").innerText = animal + " is a beautiful animal!";
-        else {
-document.getElementById("output3").innerText = "This animal doesn't exist.";
-}}
+
+    if (translations[lang][animal]) {
+        animal = translations[lang][animal];
+    }
+
+    document.getElementById("output3").innerText = translations[lang]["animal_valid"].replace("{0}", animal);
+}
