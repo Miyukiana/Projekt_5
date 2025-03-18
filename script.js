@@ -17,16 +17,8 @@ const translations = {
         "color_valid": "{0} ist eine schöne Farbe!",
         "color_invalid": "Das ist keine echte Farbe!",
         "animal_prompt": "Bitte gib ein Tier ein.",
-        "animal_valid": "{0}s sind großartige Tiere!",
-        "animal_invalid": "Dieses Tier existiert nicht in unserer Liste.",
-
-        // Tiernamen auf Deutsch
-        "dog": "Hund", "cat": "Katze", "fish": "Fisch", "bird": "Vogel", "rabbit": "Kaninchen",
-        "horse": "Pferd", "butterfly": "Schmetterling", "shark": "Hai", "giraffe": "Giraffe",
-        "elephant": "Elefant", "bee": "Biene", "lion": "Löwe", "tiger": "Tiger", "bear": "Bär",
-        "monkey": "Affe", "panda": "Panda", "penguin": "Pinguin", "kangaroo": "Känguru",
-        "koala": "Koala", "crocodile": "Krokodil", "snake": "Schlange", "turtle": "Schildkröte",
-        "owl": "Eule", "fox": "Fuchs", "wolf": "Wolf", "deer": "Hirsch", "zebra": "Zebra"
+        "animal_valid": "{0} ist ein tolles Tier!",
+        "animal_invalid": "Dieses Tier existiert nicht in unserer Liste."
     },
     "en": {
         "title": "NoIdea",
@@ -46,10 +38,32 @@ const translations = {
         "color_valid": "{0} is a beautiful color!",
         "color_invalid": "This is not a real color!",
         "animal_prompt": "Please enter an animal.",
-        "animal_valid": "{0}s are great animals!",
+        "animal_valid": "{0} is a great animal!",
         "animal_invalid": "This animal doesn't exist in our list."
     }
 };
+
+// Farb-Übersetzungen von Englisch nach Deutsch
+const colorTranslations = {
+    "red": "rot", "green": "grün", "blue": "blau", "yellow": "gelb",
+    "black": "schwarz", "white": "weiß", "gray": "grau", "purple": "lila",
+    "pink": "rosa", "brown": "braun", "orange": "orange", "turquoise": "türkis",
+    "gold": "gold", "silver": "silber"
+};
+
+const animalTranslations = {
+    "dog": "Hund", "cat": "Katze", "fish": "Fisch", "bird": "Vogel", "rabbit": "Kaninchen",
+    "horse": "Pferd", "butterfly": "Schmetterling", "shark": "Hai", "giraffe": "Giraffe",
+    "elephant": "Elefant", "bee": "Biene", "lion": "Löwe", "tiger": "Tiger", "bear": "Bär",
+    "monkey": "Affe", "panda": "Panda", "penguin": "Pinguin", "kangaroo": "Känguru",
+    "koala": "Koala", "crocodile": "Krokodil", "snake": "Schlange", "turtle": "Schildkröte",
+    "owl": "Eule", "fox": "Fuchs", "wolf": "Wolf", "deer": "Hirsch", "zebra": "Zebra"
+};
+
+// Funktion: Ersten Buchstaben groß machen
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 // Sprache setzen und Texte aktualisieren
 function setLanguage(lang) {
@@ -104,7 +118,7 @@ function getNumber() {
 // Funktion zur Farbprüfung
 function getColor() {
     const inputElement = document.getElementById("colorInput");
-    const color = inputElement.value.trim().toLowerCase();
+    let color = inputElement.value.trim().toLowerCase();
     const lang = localStorage.getItem("language") || "de";
 
     if (color === "") {
@@ -112,14 +126,18 @@ function getColor() {
         return;
     }
 
-    if (CSS.supports("color", color)) {
-        document.getElementById("output2").innerText = translations[lang]["color_valid"].replace("{0}", color);
+    // Prüfe, ob es eine deutsche Farbe ist und hole die englische Entsprechung
+    const translatedColor = Object.keys(colorTranslations).find(key => colorTranslations[key] === color);
+
+    // Falls die Farbe existiert, prüfe, ob sie von CSS unterstützt wird
+    if (CSS.supports("color", color) || (translatedColor && CSS.supports("color", translatedColor))) {
+        const formattedColor = capitalizeFirstLetter(color);
+        document.getElementById("output2").innerText = translations[lang]["color_valid"].replace("{0}", formattedColor);
     } else {
         document.getElementById("output2").innerText = translations[lang]["color_invalid"];
     }
 }
 
-// Funktion zur Tierprüfung
 function getAnimal() {
     const inputElement = document.getElementById("animalInput");
     let animal = inputElement.value.trim().toLowerCase();
@@ -130,9 +148,18 @@ function getAnimal() {
         return;
     }
 
-    if (translations[lang][animal]) {
-        animal = translations[lang][animal];
+    // Prüfe, ob das Tier auf Englisch eingegeben wurde → Übersetze es ins Deutsche
+    if (animalTranslations[animal]) {
+        animal = animalTranslations[animal];
     }
 
-    document.getElementById("output3").innerText = translations[lang]["animal_valid"].replace("{0}", animal);
+    // Prüfe auch, ob das Tier bereits direkt auf Deutsch eingegeben wurde
+    const validAnimals = Object.values(animalTranslations); // Alle deutschen Tiernamen
+
+    if (validAnimals.includes(animal) || Object.keys(animalTranslations).includes(animal)) {
+        // Falls das Tier auf Deutsch oder Englisch eingegeben wurde, ist es gültig
+        document.getElementById("output3").innerText = translations[lang]["animal_valid"].replace("{0}", capitalizeFirstLetter(animal));
+    } else {
+        document.getElementById("output3").innerText = translations[lang]["animal_invalid"];
+    }
 }
