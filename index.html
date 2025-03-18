@@ -8,29 +8,28 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h4>Sprache wählen / Choose language:</h4>
-    <div id="language-switcher">
+    <div id="one"><h4>Sprache wählen / Choose language:</h4>
+    <p id="language-switcher">
         <button onclick="setLanguage('de')">Deutsch</button>
         <button onclick="setLanguage('en')">English</button>
-    </div>
-
-    <h2 data-i18n="questions">Fragen:</h2>
-    
-    <div>
+    </p></div>
+  <hr><h2 data-i18n="questions">Fragen:</h2>
+    <hr>
+    <div id="two">
         <p data-i18n="age_question">Wie alt bist du?</p>
         <input type="number" id="numberInput" placeholder="Dein Alter" data-i18n-placeholder="age_placeholder">
         <button onclick="getNumber()" data-i18n="submit">Absenden</button>
         <p id="output"></p>
     </div>
 
-    <div>
+    <div id="three">
         <p data-i18n="color_question">Was ist deine Lieblingsfarbe?</p>
         <input type="text" id="colorInput" placeholder="Deine Lieblingsfarbe" data-i18n-placeholder="color_placeholder">
         <button onclick="getColor()" data-i18n="submit">Absenden</button>
         <p id="output2"></p>
     </div>
 
-    <div>
+    <div id="four">
         <p data-i18n="animal_question">Was ist dein Lieblingstier?</p>
         <input type="text" id="animalInput" placeholder="Dein Lieblingstier" data-i18n-placeholder="animal_placeholder">
         <button onclick="getAnimal()" data-i18n="submit">Absenden</button>
