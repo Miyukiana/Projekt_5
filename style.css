@@ -1,1 +1,44 @@
-doesn't excist jet
+*{
+  outline: none;
+  box-shadow: none;
+}
+div{
+  margin: 30px 30px 20px 30px;
+  padding: 15px;
+  border-radius: 15px;
+   border: solid 0.5px;
+}
+h2{
+  margin: 15px 15px 15px 40px;
+  color: gold;
+}
+hr{
+  display: block;
+  border: none;
+  border-top: 1px solid gold; 
+}
+h4{
+  color: rgb(200,20,60);
+}
+button{
+  color: cadetblue;
+}
+#one{
+   border-color: rgb(200,20,60);
+}
+#two{
+  border-color: yellowgreen;
+  color: yellowgreen;
+}
+#three{
+  border-color: turquoise;
+  color: turquoise;
+}
+#four{
+  border-color: lightskyblue;
+  color: lightskyblue;
+}
+#five{
+  border-color: cornflowerblue;
+  color: cornflowerblue;
+}
